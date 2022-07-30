@@ -39,7 +39,7 @@ func NewClient(secret string, host ...string) *Client {
 
 func (c *Client) SendRequest(r string, ipAddr ...string) (*SiteVerifyResponse, error) {
 	v := url.Values{"secret": {c.Secret}, "response": {r}}
-	if ipAddr[0] != "" {
+	if ipAddr != nil {
 		v.Set("remoteip", ipAddr[0])
 	}
 
@@ -61,15 +61,4 @@ func (c *Client) SendRequest(r string, ipAddr ...string) (*SiteVerifyResponse, e
 	}
 
 	return &response, nil
-}
-
-func (c *Client) Check(r string, ipAddr ...string) bool {
-	response, err := c.SendRequest(r, ipAddr[0])
-	if err != nil {
-		return false
-	}
-	if len(response.ErrorCodes) > 0 {
-		return false
-	}
-	return response.Success
 }
