@@ -25,7 +25,7 @@ type SiteVerifyResponse struct {
 
 func NewClient(secret string, host ...string) *Client {
 	var h string
-	if host[0] != "" {
+	if host != nil {
 		h = host[0]
 	} else {
 		h = "https://hcaptcha.com/siteverify"
